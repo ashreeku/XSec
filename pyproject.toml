@@ -1,0 +1,14 @@
+[project]
+name = "xsec"  # Required
+
+version = "1.0.0"  # Required
+
+readme = "README.md" # Optional
+
+requires-python = ">=3.10"
+
+license = {file = "LICENSE.txt"}
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
