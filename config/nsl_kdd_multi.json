@@ -1,0 +1,34 @@
+{
+    "dataset": "nsl_kdd_multi",
+    "data_path": "../data/nsl_kdd_multi/",
+    "seed": 942,
+    "normalize": false,
+    "batch_size": 256,
+    "num_classes": 4,
+    "num_prototypes_per_class": 10,
+    "feature_dim": 41,
+    "embedding_dim": 4,
+    "learning_rates": {
+        "encoder": 1e-3,
+        "decoder": 1e-3,
+        "prototypes": 1e-3,
+        "masks": 1e-3,
+        "last_layer": 1e-3
+    },
+    "joint_epochs": 70,
+    "last_layer_epochs": 30,
+    "coefficients": {
+        "cross_entropy": 1,
+        "cluster": 0.8,
+        "separation": 0,
+        "mask_diversity": 0.5,
+        "binary_mask": 0.5,
+        "sparsity": 15.0,
+        "l1": 0.8
+    },
+    "save_path": "../checkpoint/nsl_kdd_multi/",
+    "evaluation": {
+        "num_samples": 2400,
+        "step": 5
+    }
+}

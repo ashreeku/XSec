@@ -1,0 +1,34 @@
+{
+    "dataset": "phishing",
+    "data_path": "../data/phishing/",
+    "seed": 173,
+    "normalize": true,
+    "batch_size": 256,
+    "num_classes": 2,
+    "num_prototypes_per_class": 10,
+    "feature_dim": 38,
+    "embedding_dim": 128,
+    "learning_rates": {
+        "encoder": 5e-3,
+        "decoder": 5e-3,
+        "prototypes": 5e-3,
+        "masks": 5e-3,
+        "last_layer": 5e-3
+    },
+    "joint_epochs": 70,
+    "last_layer_epochs": 30,
+    "coefficients": {
+        "cross_entropy": 3.5,
+        "cluster": 0.5,
+        "separation": 0,
+        "mask_diversity": 0.5,
+        "binary_mask": 0.5,
+        "sparsity": 5.0,
+        "l1": 0.8
+    },
+    "save_path": "../checkpoint/phishing/",
+    "evaluation": {
+        "num_samples": 2000,
+        "step": 5
+    }
+}

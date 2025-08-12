@@ -1,0 +1,34 @@
+{
+    "dataset": "bodmas",
+    "data_path": "../data/bodmas/",
+    "seed": 583,
+    "normalize": true,
+    "batch_size": 256,
+    "num_classes": 5,
+    "num_prototypes_per_class": 10,
+    "feature_dim": 100,
+    "embedding_dim": 128,
+    "learning_rates": {
+        "encoder": 1e-3,
+        "decoder": 1e-3,
+        "prototypes": 1e-3,
+        "masks": 1e-3,
+        "last_layer": 1e-3
+    },
+    "joint_epochs": 30,
+    "last_layer_epochs": 10,
+    "coefficients": {
+        "cross_entropy": 1.0,
+        "cluster": 0.8,
+        "separation": 0,
+        "mask_diversity": 0.5,
+        "binary_mask": 0.5,
+        "sparsity": 15.0,
+        "l1": 0.8
+    },
+    "save_path": "../checkpoint/bodmas/",
+    "evaluation": {
+        "num_samples": 4068,
+        "step": 10
+    }
+}
