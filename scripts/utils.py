@@ -18,14 +18,16 @@ def set_seed(seed):
 
 def get_args(argv):
         parser = argparse.ArgumentParser()
-        parser.add_argument('-c', '--config', type=str, help='path to configuration file')
-        parser.add_argument('-n', '--num_similarity_scores', type=int, default=3, help='number of similarity scores to consider while generating explanations')
-        parser.add_argument('-k', '--num_prototypes_per_class', type=int, default=10, help='number of prototypes per class')
+        parser.add_argument("-c", "--config", type=str, help="path to configuration file")
+        parser.add_argument("-n", "--num_similarity_scores", type=int, default=3, help="number of similarity scores to consider while generating explanations")
+        parser.add_argument("-k", "--num_prototypes_per_class", type=int, default=10, help="number of prototypes per class")
         parser.add_argument(
-            '-a', '--ablation', type=str, default=None,
+            "-a", "--ablation", type=str, default=None,
             choices = {"binary", "cluster", "diversity", "sparsity", "crossentropy"},
-            help='ablation used to train the model'
+            help="ablation used to train the model"
         )
+        parser.add_argument("--train", action="store_true", help="run on train data?")
+        parser.add_argument("--alternate", action="store_true", help="run with second seed?")
         return parser.parse_args(argv)
 
 
@@ -44,19 +46,6 @@ class CustomDataset(Dataset):
 def load_data(path):
     data = np.load(os.path.join(path,"data.npz"))
     return data["x_train"], data["y_train"], data["x_test"], data["y_test"]
-
-
-class NotClassLoader(object):
-    def __init__(self, x, y, config):
-        self.x = x
-        self.y = y
-        self.num_classes = config["num_classes"]
-        self.class_indices = [np.where(y != c)[0] for c in range(self.num_classes)]
-    
-    def get_sample_not_class(self, c):
-        indices = self.class_indices[c]
-        idx = random.choice(indices)
-        return self.x[idx].copy(), self.y[idx].copy()
 
 
 def evaluate(test_loader, model, device):

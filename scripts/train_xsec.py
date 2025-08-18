@@ -13,8 +13,7 @@ from xsec.models import *
 from utils import *
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# device = torch.device("cpu")
+device = torch.device("cpu")
 
 
 class WeightConstraint(object):
@@ -38,6 +37,18 @@ class WeightConstraint(object):
         norm = torch.sqrt(torch.sum(torch.matmul(w, x) ** 2) / torch.sum(x ** 2))
 
         return w * (1.0 / torch.clamp(norm / self.max_k, min=1))
+
+
+def get_model_path(args, config):
+    model_name = f"model"
+    if args['num_prototypes_per_class'] != 10:
+        model_name += f"_k{args['num_prototypes_per_class']}"
+        config["num_prototypes_per_class"] = args["num_prototypes_per_class"]
+    if args["ablation"]:
+        model_name += f"_no{args['ablation']}"
+    model_name += ".pt"
+    model_path = os.path.join("../checkpoint", config["dataset"], model_name)
+    return model_path, config
 
 
 def train_one_epoch(epoch, optimizer):
@@ -184,34 +195,9 @@ if __name__ == '__main__':
         epoch_pbar.update(1)
 
     epoch_pbar.close()
-
-    # testing
-
-    model.train(False)
-    gt, pred = evaluate(train_loader, model, device)
-    performance = EvaluationScores(gt, pred, config["num_classes"])
-    acc = performance.accuracy()
-    pre = performance.precision()
-    rec = performance.recall()
-    fpr = performance.fpr()
-    print(f"Train accuracy: {acc}")
-    print(f"Train Precision: {pre}")
-    print(f"Train Recall: {rec}")
-    print(f"Train FPR: {fpr}")
-
-    # testing
-    gt, pred = evaluate(test_loader, model, device)
-    performance = EvaluationScores(gt, pred, config["num_classes"])
-    acc = performance.accuracy()
-    pre = performance.precision()
-    rec = performance.recall()
-    fpr = performance.fpr()
-    print(f"Test accuracy: {acc}")
-    print(f"Test Precision: {pre}")
-    print(f"Test Recall: {rec}")
-    print(f"Test FPR: {fpr}")
     
+    model_path, config = get_model_path(args, config)
     # torch.save({
     #     'epoch': epoch,
     #     'model_state_dict': model.state_dict(),
-    # }, os.path.join(config["save_path"], f"model_{seed}_nocrossentropy.pt"))
+    # }, os.path.join(config["save_path"], model_path))

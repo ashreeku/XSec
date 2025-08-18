@@ -25,11 +25,11 @@ if __name__ == '__main__':
     set_seed(seed)
 
     k_to_model = {
-        10: f"model_{seed}.pt",
-        3: f"model_{seed}_k3.pt",
-        5: f"model_{seed}_k5.pt",
-        20: f"model_{seed}_k20.pt",
-        30: f"model_{seed}_k30.pt",
+        10: f"model.pt",
+        3: f"model_k3.pt",
+        5: f"model_k5.pt",
+        20: f"model_k20.pt",
+        30: f"model_k30.pt",
     }
 
     for k, model_name in k_to_model.items():

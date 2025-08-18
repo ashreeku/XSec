@@ -25,12 +25,12 @@ if __name__ == '__main__':
     set_seed(seed)
 
     ablation_to_model = {
-        "None": f"model_{seed}.pt",
-        "Sparsity": f"model_{seed}_nosparsity.pt",
-        "Binary": f"model_{seed}_nobinary.pt",
-        "Cluster": f"model_{seed}_nocluster.pt",
-        "Similarity": f"model_{seed}_nodiversity.pt",
-        "Crossentropy": f"model_{seed}_nocrossentropy.pt",
+        "None": f"model.pt",
+        "Sparsity": f"model_nosparsity.pt",
+        "Binary": f"model_nobinary.pt",
+        "Cluster": f"model_nocluster.pt",
+        "Similarity": f"model_nodiversity.pt",
+        "Crossentropy": f"model_nocrossentropy.pt",
     }
 
     for ablation, model_name in ablation_to_model.items():

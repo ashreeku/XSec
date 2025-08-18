@@ -1,4 +1,3 @@
-import json
 import torch
 
 import torch.nn as nn
@@ -64,9 +63,9 @@ class XSec(nn.Module):
         super(XSec, self).__init__()
         self.device = device if device else torch.device('cpu')
 
-        num_classes = config["num_classes"]
-        num_prototypes_per_class = config["num_prototypes_per_class"]
-        num_prototypes = num_classes * num_prototypes_per_class
+        self.num_classes = config["num_classes"]
+        self.num_prototypes_per_class = config["num_prototypes_per_class"]
+        num_prototypes = self.num_classes * self.num_prototypes_per_class
         embedding_dim = config["embedding_dim"]
 
         # define all models
@@ -89,11 +88,6 @@ class XSec(nn.Module):
         self.last_layer = LastLayer(config)
 
     def calculate_similarity(self, x):
-        """
-        calculate the similarity scores between prototypes and subfeature embeddings
-        input_shape: (num_samples, num_prototypes, feature_dim)
-        output_shape: (num_samples, num_prototypes)
-        """
         distances = torch.linalg.vector_norm(x - self.prototypes, ord=2, dim=2) ** 2
         similarities = torch.log((distances + 1) / (distances + 1e-4))
         return distances, similarities
@@ -112,6 +106,20 @@ class XSec(nn.Module):
         pred, _, _, _ = self.forward(x)
         pred = F.softmax(pred, dim=1).cpu().detach().numpy()
         return pred
+
+    def explain(self, x, n):
+        k = self.num_prototypes_per_class
+        prob, _, sim, masks = self.forward(x)
+        pred = torch.argmax(prob).item()
+        rel_masks = masks[pred * k: (pred + 1) * k]
+        sim = sim.squeeze()
+        rel_sim = sim[pred * k: (pred + 1) * k]
+        sorted_sim_idx = rel_sim.sort(descending=True).indices[:n]
+        rel_sim = rel_sim[sorted_sim_idx].unsqueeze(dim=1)
+        rel_masks = rel_masks[sorted_sim_idx, :]
+        weighted_masks = rel_masks * rel_sim
+        importance_scores = weighted_masks.sum(dim=0)
+        return importance_scores
 
 
 class PDFEncoder(nn.Module):

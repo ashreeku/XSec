@@ -27,7 +27,7 @@ if __name__ == '__main__':
     set_seed(seed)
 
     models = {}
-    checkpoint_path = f"{config['save_path']}/model_{seed}.pt"
+    checkpoint_path = f"{config['save_path']}/model.pt"
     checkpoint = torch.load(checkpoint_path)
     model_xsec = XSec(config, device)
     model_xsec.load_state_dict(checkpoint["model_state_dict"])
@@ -56,6 +56,11 @@ if __name__ == '__main__':
 
     for name, model in models.items():
         x_train, y_train, x_test, y_test = load_data(config["data_path"])
+        if name == "CNN":
+            x_train = np.expand_dims(x_train, axis=1)
+            x_train = np.expand_dims(x_train, axis=3)
+            x_test = np.expand_dims(x_test, axis=1)
+            x_test = np.expand_dims(x_test, axis=3)
 
         test_dataset = CustomDataset(x_test, y_test)
         test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False, num_workers=4)

@@ -4,7 +4,6 @@ import sys
 import torch
 
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
 
 from torch.utils.data import DataLoader
@@ -28,8 +27,6 @@ class CNN(nn.Module):
         self.fc2 = nn.Linear(128, num_classes)
 
     def forward(self, x):
-        x = torch.unsqueeze(x, 1)
-        x = torch.unsqueeze(x, 3)
         x = self.conv1(x)
         x = F.relu(x)
         x = self.conv2(x)
@@ -84,6 +81,10 @@ if __name__ == "__main__":
     set_seed(seed)
 
     x_train, y_train, x_test, y_test = load_data(config["data_path"])
+    x_train = np.expand_dims(x_train, axis=1)
+    x_train = np.expand_dims(x_train, axis=3)
+    x_test = np.expand_dims(x_test, axis=1)
+    x_test = np.expand_dims(x_test, axis=3)
 
     train_dataset = CustomDataset(x_train, y_train)
     train_loader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, num_workers=4)
