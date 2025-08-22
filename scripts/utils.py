@@ -48,6 +48,13 @@ def load_data(path):
     return data["x_train"], data["y_train"], data["x_test"], data["y_test"]
 
 
+def normalize_scores(scores):
+    min_score, max_score = scores.min(dim=1).values.unsqueeze(1), scores.max(dim=1).values.unsqueeze(1)
+    assert min_score.shape[0] == scores.shape[0] == max_score.shape[0], "Inconsistent dimensions"
+    scores = (scores - min_score) / (max_score - min_score)
+    return scores
+
+
 def evaluate(test_loader, model, device):
     y_true = []
     y_pred = []

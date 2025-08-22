@@ -48,7 +48,7 @@ if __name__ == "__main__":
         axs[0][i].plot(x_axis, synth_test_xsec, color="blue", marker='x', linestyle="solid", label=f"XSec ($n={n}$)")
         axs[0][i].plot(x_axis, synth_test_lime, color="darkgreen", marker='o', linestyle="dashed", label="LIME")
         axs[0][i].plot(x_axis, synth_test_shap, color="red", marker='*', linestyle="dotted", label="SHAP")
-        axs[0][i].plot(x_axis, synth_test_ig, color="orange", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="IG")
+        axs[0][i].plot(x_axis, synth_test_ig, color="orange", marker='|', linestyle="dashdot", label="IG")
         axs[0][i].plot(x_axis, synth_test_ggc, color="pink", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="GGC")
         axs[0][i].set_xlim([0, config["feature_dim"]])
         axs[0][i].set_ylim([0, 100])
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         if np.any(mask_shap):
             axs[1][i].plot(x_axis[mask_shap], feat_aug_test_shap[mask_shap], color="red", marker='*', linestyle="dotted", label="SHAP")
         if np.any(mask_ig):
-            axs[1][i].plot(x_axis[mask_ig], feat_aug_test_ig[mask_ig], color="orange", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="IG")
+            axs[1][i].plot(x_axis[mask_ig], feat_aug_test_ig[mask_ig], color="orange", marker='|', linestyle="dashdot", label="IG")
         if np.any(mask_ggc):
             axs[1][i].plot(x_axis[mask_ggc], feat_aug_test_ggc[mask_ggc], color="pink", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="GGC")
         axs[1][i].set_xlim([0, config["feature_dim"]])
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         axs[2][i].plot(x_axis, feat_deduc_test_xsec, color="blue", marker='x', linestyle="solid", label=f"XSec (n={n})")
         axs[2][i].plot(x_axis, feat_deduc_test_lime, color="darkgreen", marker='o', linestyle="dashed", label="LIME")
         axs[2][i].plot(x_axis, feat_deduc_test_shap, color="red", marker='*', linestyle="dotted", label="SHAP")
-        axs[2][i].plot(x_axis, feat_deduc_test_ig, color="orange", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="IG")
+        axs[2][i].plot(x_axis, feat_deduc_test_ig, color="orange", marker='|', linestyle="dashdot", label="IG")
         axs[2][i].plot(x_axis, feat_deduc_test_ggc, color="pink", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="GGC")
         axs[2][i].set_xlim([0, config["feature_dim"]])
         axs[2][i].set_ylim([0, 100])

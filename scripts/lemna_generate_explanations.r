@@ -1,4 +1,4 @@
-setwd("/mnt/c/Users/anant/Downloads/PhD/xsec/scripts/")
+setwd("path")
 #!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
 seed <- as.integer(args[[1]])
