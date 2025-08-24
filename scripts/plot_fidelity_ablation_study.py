@@ -50,8 +50,8 @@ if __name__ == "__main__":
         axs[0][i].plot(x_axis, synth_test_binary, color="darkgreen", marker='o', linestyle="dashed", label="$\mathcal{L}_{bin}$")
         axs[0][i].plot(x_axis, synth_test_diversity, color="red", marker='*', linestyle="dotted", label="$\mathcal{L}_{sim}$")
         axs[0][i].plot(x_axis, synth_test_crossentropy, color="orange", marker='|', linestyle="dashdot", label="$\mathcal{L}_{xe}$")
-        axs[0][i].plot(x_axis, synth_test_cluster, color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
-        axs[0][i].plot(x_axis, synth_test_sparsity, color="brown", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
+        axs[0][i].plot(x_axis, synth_test_cluster, color="pink", marker='^', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
+        axs[0][i].plot(x_axis, synth_test_sparsity, color="brown", marker='s', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
         axs[0][i].set_xlim([0, config["feature_dim"]])
         axs[0][i].set_ylim([0, 100])
         axs[0][i].set_xticks(x_axis[::2])
@@ -79,9 +79,9 @@ if __name__ == "__main__":
         if np.any(mask_crossentropy):
             axs[1][i].plot(x_axis[mask_crossentropy], feat_aug_test_crossentropy[mask_crossentropy], color="orange", marker='|', linestyle="dashdot", label="$\mathcal{L}_{xe}$")
         if np.any(mask_cluster):
-            axs[1][i].plot(x_axis[mask_cluster], feat_aug_test_cluster[mask_cluster], color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
+            axs[1][i].plot(x_axis[mask_cluster], feat_aug_test_cluster[mask_cluster], color="pink", marker='^', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
         if np.any(mask_sparsity):
-            axs[1][i].plot(x_axis[mask_sparsity], feat_aug_test_sparsity[mask_sparsity], color="brown", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
+            axs[1][i].plot(x_axis[mask_sparsity], feat_aug_test_sparsity[mask_sparsity], color="brown", marker='s', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
         axs[1][i].set_xlim([0, config["feature_dim"]])
         axs[1][i].set_ylim([0, 100])
         axs[1][i].set_xticks(x_axis[::2])
@@ -98,8 +98,8 @@ if __name__ == "__main__":
         axs[2][i].plot(x_axis, feat_deduc_test_binary, color="darkgreen", marker='o', linestyle="dashed", label="$\mathcal{L}_{bin}$")
         axs[2][i].plot(x_axis, feat_deduc_test_diversity, color="red", marker='*', linestyle="dotted", label="$\mathcal{L}_{sim}$")
         axs[2][i].plot(x_axis, feat_deduc_test_crossentropy, color="orange", marker='|', linestyle="dashdot", label="$\mathcal{L}_{xe}$")
-        axs[2][i].plot(x_axis, feat_deduc_test_cluster, color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
-        axs[2][i].plot(x_axis, feat_deduc_test_sparsity, color="brown", marker='|', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
+        axs[2][i].plot(x_axis, feat_deduc_test_cluster, color="pink", marker='^', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="$\mathcal{L}_{cls}$")
+        axs[2][i].plot(x_axis, feat_deduc_test_sparsity, color="brown", marker='s', linestyle=(0, (3, 1, 1, 1, 1, 1)), label="$\mathcal{L}_{spar}$")
         axs[2][i].set_xlim([0, config["feature_dim"]])
         axs[2][i].set_ylim([0, 100])
         axs[2][i].set_xticks(x_axis[::2])

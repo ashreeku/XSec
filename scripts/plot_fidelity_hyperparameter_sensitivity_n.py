@@ -47,7 +47,7 @@ if __name__ == "__main__":
         axs[0][i].plot(x_axis, synth_test_xsec_1, color="darkgreen", marker='o', linestyle="dashed", label="n = 1")
         axs[0][i].plot(x_axis, synth_test_xsec_5, color="red", marker='*', linestyle="dotted", label="n = 5")
         axs[0][i].plot(x_axis, synth_test_xsec_7, color="orange", marker='|', linestyle="dashdot", label="n = 7")
-        axs[0][i].plot(x_axis, synth_test_xsec_10, color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
+        axs[0][i].plot(x_axis, synth_test_xsec_10, color="cadetblue", marker='s', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
         axs[0][i].set_xlim([0, config["feature_dim"]])
         axs[0][i].set_xticks(x_axis[::2])
         axs[0][i].grid()
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         if np.any(mask_xsec_7):
             axs[1][i].plot(x_axis[mask_xsec_7], feat_aug_test_xsec_7[mask_xsec_7], color="orange", marker='|', linestyle="dashdot", label="n = 7")
         if np.any(mask_xsec_10):
-            axs[1][i].plot(x_axis[mask_xsec_10], feat_aug_test_xsec_10[mask_xsec_10], color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
+            axs[1][i].plot(x_axis[mask_xsec_10], feat_aug_test_xsec_10[mask_xsec_10], color="cadetblue", marker='s', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
         axs[1][i].set_xlim([0, config["feature_dim"]])
         axs[1][i].set_xticks(x_axis[::2])
         axs[1][i].grid()
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         axs[2][i].plot(x_axis, feat_deduc_test_xsec_1, color="darkgreen", marker='o', linestyle="dashed", label="n = 1")
         axs[2][i].plot(x_axis, feat_deduc_test_xsec_5, color="red", marker='*', linestyle="dotted", label="n = 5")
         axs[2][i].plot(x_axis, feat_deduc_test_xsec_7, color="orange", marker='|', linestyle="dashdot", label="n = 7")
-        axs[2][i].plot(x_axis, feat_deduc_test_xsec_10, color="pink", marker='|', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
+        axs[2][i].plot(x_axis, feat_deduc_test_xsec_10, color="cadetblue", marker='s', linestyle=(0, (3, 5, 1, 5, 1, 5)), label="n = 10")
         axs[2][i].set_xlim([0, config["feature_dim"]])
         axs[2][i].set_xticks(x_axis[::2])
         axs[2][i].grid()

@@ -16,8 +16,28 @@ if __name__ == '__main__':
     fig.set_size_inches(25, 3)
     pad = 13
 
-    colors = ["blue", "darkgreen", "red", "orange", "pink", "brown", "cadetblue"]
-    linestyles = ["solid", "dashed", "dotted", "dashdot", (0, (3, 1, 1, 1, 1, 1)), (0, (3, 5, 1, 5, 1, 5)), (0, (3, 10, 1, 10, 1, 10))]
+    colors = {
+        "XSec ($n=3$)": "blue",
+        "LIME": "darkgreen",
+        "SHAP": "red",
+        "IG": "orange",
+        "GGC": "pink",
+        "LEMNA": "brown",
+        "xNIDS": "cadetblue",
+        "Occl.": "fuchsia",
+        "SM": "grey"
+    }
+    linestyles = {
+        "XSec ($n=3$)": "solid",
+        "LIME": "dashed",
+        "SHAP": "dotted",
+        "IG": "dashdot",
+        "GGC": (0, (3, 1, 1, 1, 1, 1)),
+        "LEMNA": (0, (3, 5, 1, 5, 1, 5)),
+        "xNIDS": (0, (3, 10, 1, 10, 1, 10)),
+        "Occl.": (0, (3, 5, 1, 5)),
+        "SM": (0, (3, 1, 1, 1))
+    }
 
     num_bins = 1000
     bins = np.linspace(0.0, 1.0, num=num_bins + 1)
@@ -38,6 +58,8 @@ if __name__ == '__main__':
             "SHAP": f"shap_seed{seed}.pkl",
             "IG": f"ig_seed{seed}.pkl",
             "GGC": f"ggc_seed{seed}.pkl",
+            "Occl.": f"occl_seed{seed}.pkl",
+            "SM": f"sm_seed{seed}.pkl",
         }
 
         if config["dataset"] in ["pdf", "phishing", "netflow"]:
@@ -46,7 +68,7 @@ if __name__ == '__main__':
         if config["dataset"] in ["netflow"]:
             method_to_path["xNIDS"] = f"xnids_seed{seed}.pkl"
 
-        for j, (method, path) in enumerate(method_to_path.items()):
+        for method, path in method_to_path.items():
             with open(f"../results/{config['dataset']}/importance_scores/{path}", "rb") as infile:
                 importance_scores = pickle.load(infile)["importance_scores"]
             importance_scores = torch.abs(importance_scores)
@@ -57,7 +79,7 @@ if __name__ == '__main__':
             densities = np.cumsum(densities / num_bins)
             print(f"{method}: {auc(bins[:-1], densities)}")
 
-            axs[i].plot(bins[:-1], densities, color=colors[j], linestyle=linestyles[j], label=method)
+            axs[i].plot(bins[:-1], densities, color=colors[method], linestyle=linestyles[method], label=method)
         axs[i].set_xlabel("Interval Size")
         axs[i].set_xlim([0.0, 1.0])
         axs[i].set_ylim([0.0, 1.0])
@@ -74,7 +96,7 @@ if __name__ == '__main__':
                 ha='right', va='center', rotation=90)
 
     handles, labels = axs[2].get_legend_handles_labels()
-    fig.legend(handles, labels, ncol=7, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
+    fig.legend(handles, labels, ncol=9, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
     
     plt.tight_layout()
     plt.savefig(f"../results/figures/sparsity_baseline_comparison.pdf", bbox_inches="tight")

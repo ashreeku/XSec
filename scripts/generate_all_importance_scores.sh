@@ -2,15 +2,12 @@ for config in pdf phishing netflow bodmas nsl_kdd_multi
 do
     # comparison with baselines
     python run_xsec.py --config ../config/${config}.json
-    python run_xsec.py --config ../config/${config}.json --train
     python run_lime.py --config ../config/${config}.json
-    python run_lime.py --config ../config/${config}.json --train
     python run_shap.py --config ../config/${config}.json
-    python run_shap.py --config ../config/${config}.json --train
     python run_ig.py --config ../config/${config}.json
-    python run_ig.py --config ../config/${config}.json --train
     python run_ggc.py --config ../config/${config}.json
-    python run_ggc.py --config ../config/${config}.json --train
+    python run_occl.py --config ../config/${config}.json
+    python run_sm.py --config ../config/${config}.json
     python lemna_save_data_for_R.py --config ../config/${config}.json
 
     # hyperparameter sensitivity
@@ -36,15 +33,14 @@ python run_xsec.py --config ../config/bodmas200.json --num_prototypes_per_class 
 python run_xsec.py --config ../config/bodmas500.json --num_prototypes_per_class 50
 
 # generate explanations for lemna
-Rscript lemna_generate_explanations.r 3317 pdf TRUE
-Rscript lemna_generate_explanations.r 5311 phishing TRUE
-Rscript lemna_generate_explanations.r 6558 netflow TRUE
+Rscript lemna_generate_explanations.r 3317 pdf FALSE
+Rscript lemna_generate_explanations.r 5311 phishing FALSE
+Rscript lemna_generate_explanations.r 6558 netflow FALSE
 
 # save importance scores for lemna
 for config in pdf phishing netflow
 do
     python run_lemna.py --config ../config/${config}.json
-    python run_lemna.py --config ../config/${config}.json --train
 done
 
 # generate importance scores for test data with alternate seed to compute stability
@@ -55,6 +51,8 @@ do
     python run_shap.py --config ../config/${config}.json --alternate
     python run_ig.py --config ../config/${config}.json --alternate
     python run_ggc.py --config ../config/${config}.json --alternate
+    python run_occl.py --config ../config/${config}.json --alternate
+    python run_sm.py --config ../config/${config}.json --alternate
 done
 
 Rscript lemna_generate_explanations.r 7705 pdf FALSE
