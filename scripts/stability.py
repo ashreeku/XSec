@@ -36,7 +36,9 @@ if __name__ == '__main__':
             # "IG": (f"ig_seed{seeds[0]}.pkl", f"ig_seed{seeds[1]}.pkl"),
             # "GGC": (f"ggc_seed{seeds[0]}.pkl", f"ggc_seed{seeds[1]}.pkl"),
             # "Occl": (f"occl_seed{seeds[0]}.pkl", f"occl_seed{seeds[1]}.pkl"),
-            "SM": (f"sm_seed{seeds[0]}.pkl", f"sm_seed{seeds[1]}.pkl"),
+            # "SM": (f"sm_seed{seeds[0]}.pkl", f"sm_seed{seeds[1]}.pkl"),
+            "PPN": (f"protopnet_seed{seeds[0]}.pkl", f"protopnet_seed{seeds[1]}.pkl"),
+            "Tran": (f"transformer_seed{seeds[0]}.pkl", f"transformer_seed{seeds[1]}.pkl"),
         }
 
         # if config["dataset"] in ["pdf", "phishing", "netflow"]:

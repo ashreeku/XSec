@@ -25,7 +25,9 @@ if __name__ == '__main__':
         "LEMNA": "brown",
         "xNIDS": "cadetblue",
         "Occl.": "fuchsia",
-        "SM": "grey"
+        "SM": "grey",
+        "PPN": "black",
+        "Tran.": "olive"
     }
     linestyles = {
         "XSec ($n=3$)": "solid",
@@ -36,7 +38,9 @@ if __name__ == '__main__':
         "LEMNA": (0, (3, 5, 1, 5, 1, 5)),
         "xNIDS": (0, (3, 10, 1, 10, 1, 10)),
         "Occl.": (0, (3, 5, 1, 5)),
-        "SM": (0, (3, 1, 1, 1))
+        "SM": (0, (3, 1, 1, 1)),
+        "PPN": (0, (3, 10, 1, 10, 1, 10)),
+        "Tran.": (0, (3, 10, 1, 10, 1, 10))
     }
 
     num_bins = 1000
@@ -60,6 +64,8 @@ if __name__ == '__main__':
             "GGC": f"ggc_seed{seed}.pkl",
             "Occl.": f"occl_seed{seed}.pkl",
             "SM": f"sm_seed{seed}.pkl",
+            "PPN": f"protopnet_seed{seed}.pkl",
+            "Tran.": f"transformer_seed{seed}.pkl",
         }
 
         if config["dataset"] in ["pdf", "phishing", "netflow"]:
@@ -96,7 +102,7 @@ if __name__ == '__main__':
                 ha='right', va='center', rotation=90)
 
     handles, labels = axs[2].get_legend_handles_labels()
-    fig.legend(handles, labels, ncol=9, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
+    fig.legend(handles, labels, ncol=11, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
     
     plt.tight_layout()
     plt.savefig(f"../results/figures/sparsity_baseline_comparison.pdf", bbox_inches="tight")

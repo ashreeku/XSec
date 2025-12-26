@@ -8,6 +8,8 @@ from xsec import XSec
 from train_mlp import MLP
 from train_lstm import LSTMNN
 from train_cnn import CNN
+from train_protopnet import ProtoPNet
+from train_transformer import Transformer
 from utils import *
 
 
@@ -54,6 +56,18 @@ if __name__ == '__main__':
         model_cnn.train(False)
         models["CNN"] = model_cnn
 
+    checkpoint = torch.load(f"{config['save_path']}/model_protopnet.pt")
+    model_protopnet = ProtoPNet(config)
+    model_protopnet.load_state_dict(checkpoint["model_state_dict"])
+    model_protopnet.train(False)
+    models["PPN"] = model_protopnet
+
+    checkpoint = torch.load(f"{config['save_path']}/model_transformer.pt")
+    model_transformer = Transformer(config["embedding_dim"], config["feature_dim"], config["num_classes"])
+    model_transformer.load_state_dict(checkpoint["model_state_dict"])
+    model_transformer.train(False)
+    models["Tran"] = model_transformer
+
     for name, model in models.items():
         x_train, y_train, x_test, y_test = load_data(config["data_path"])
         if name == "CNN":
@@ -61,6 +75,10 @@ if __name__ == '__main__':
             x_train = np.expand_dims(x_train, axis=3)
             x_test = np.expand_dims(x_test, axis=1)
             x_test = np.expand_dims(x_test, axis=3)
+        
+        if name == "PPN":
+            x_train = np.expand_dims(x_train, axis=1)
+            x_test = np.expand_dims(x_test, axis=1)
 
         test_dataset = CustomDataset(x_test, y_test)
         test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False, num_workers=4)

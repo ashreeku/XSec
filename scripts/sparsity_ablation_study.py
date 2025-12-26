@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 ha='right', va='center', rotation=90)
 
     handles, labels = axs[2].get_legend_handles_labels()
-    fig.legend(handles, labels, ncol=7, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
+    fig.legend(handles, labels, ncol=6, loc="upper center", bbox_to_anchor=(0.517, 1.15), frameon=True, edgecolor="black")
     
     plt.tight_layout()
     plt.savefig(f"../results/figures/sparsity_ablation_study.pdf", bbox_inches="tight")

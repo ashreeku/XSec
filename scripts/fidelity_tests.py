@@ -15,6 +15,7 @@ class NotClassLoader(object):
 
 
 def synthetic_test(x, importance_scores, m):
+    assert x.shape == importance_scores.shape, "shape mismatch"
     _, num_features = x.shape
     synthetic_samples = []
     for s, w in zip(x, importance_scores):
@@ -28,6 +29,7 @@ def synthetic_test(x, importance_scores, m):
 
 
 def feature_augmentation_test(x, y, importance_scores, m, not_class_loader):
+    assert x.shape == importance_scores.shape, "shape mismatch"
     augmented_samples = []
     for s, p, w in zip(x, y, importance_scores):
         sorted_idx = torch.argsort(w, descending=True)
@@ -40,6 +42,7 @@ def feature_augmentation_test(x, y, importance_scores, m, not_class_loader):
 
 
 def feature_deduction_test(x, importance_scores, m):
+    assert x.shape == importance_scores.shape, "shape mismatch"
     _, num_features = x.shape
     deducted_samples = []
     for s, w in zip(x, importance_scores):
