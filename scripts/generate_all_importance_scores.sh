@@ -9,6 +9,8 @@ do
     python run_occl.py --config ../config/${config}.json
     python run_sm.py --config ../config/${config}.json
     python lemna_save_data_for_R.py --config ../config/${config}.json
+    python run_protopnet.py --config ../config/${config}.json
+    python run_transformer.py --config ../config/${config}.json
 
     # hyperparameter sensitivity
     for k in 20 30
@@ -53,6 +55,8 @@ do
     python run_ggc.py --config ../config/${config}.json --alternate
     python run_occl.py --config ../config/${config}.json --alternate
     python run_sm.py --config ../config/${config}.json --alternate
+    python run_protopnet.py --config ../config/${config}.json --alternate
+    python run_transformer.py --config ../config/${config}.json --alternate
 done
 
 Rscript lemna_generate_explanations.r 7705 pdf FALSE

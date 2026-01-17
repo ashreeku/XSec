@@ -8,6 +8,8 @@ do
     python fidelity_ggc.py --config ../config/${config}.json
     python fidelity_occl.py --config ../config/${config}.json
     python fidelity_sm.py --config ../config/${config}.json
+    python fidelity_protopnet.py --config ../config/${config}.json
+    python fidelity_transformer.py --config ../config/${config}.json
 
     # hyperparameter sensitivity
     for k in 20 30

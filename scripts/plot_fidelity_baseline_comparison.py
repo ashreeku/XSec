@@ -41,8 +41,8 @@ if __name__ == "__main__":
             sm = pickle.load(infile)
         with open(f"../results/{config['dataset']}/protopnet_fidelity_values_seed{seed}.pkl", "rb") as infile:
             protopnet = pickle.load(infile)
-        # with open(f"../results/{config['dataset']}/transformer_fidelity_values_seed{seed}.pkl", "rb") as infile:
-        #     transformer = pickle.load(infile)
+        with open(f"../results/{config['dataset']}/transformer_fidelity_values_seed{seed}.pkl", "rb") as infile:
+            transformer = pickle.load(infile)
 
         step = config["evaluation"]["step"]
         x_axis = np.arange(step, config["feature_dim"] + 1, step)
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         synth_test_occl = occl["synth_test"]
         synth_test_sm = sm["synth_test"]
         synth_test_protopnet = protopnet["synth_test"]
-        # synth_test_transformer = transformer["synth_test"]
+        synth_test_transformer = transformer["synth_test"]
         
         axs[0][i].plot(x_axis, synth_test_xsec, color="blue", marker='x', linestyle="solid", label=f"XSec ($n={n}$)")
         axs[0][i].plot(x_axis, synth_test_lime, color="darkgreen", marker='o', linestyle="dashed", label="LIME")
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         axs[0][i].plot(x_axis, synth_test_occl, color="fuchsia", marker='.', linestyle=(0, (3, 5, 1, 5)), label="Occl.")
         axs[0][i].plot(x_axis, synth_test_sm, color="grey", marker='s', linestyle=(0, (3, 1, 1, 1)), label="SM")
         axs[0][i].plot(x_axis, synth_test_protopnet, color="black", marker='^', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="PPN")
-        # axs[0][i].plot(x_axis, synth_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+        axs[0][i].plot(x_axis, synth_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
         axs[0][i].set_xlim([0, config["feature_dim"]])
         # axs[0][i].set_ylim([0, 100])
         axs[0][i].set_xticks(x_axis[::2])
@@ -87,8 +87,8 @@ if __name__ == "__main__":
         mask_sm = ~np.isnan(feat_aug_test_sm)
         feat_aug_test_protopnet = sm["feat_aug_test"]
         mask_protopnet = ~np.isnan(feat_aug_test_protopnet)
-        # feat_aug_test_transformer = transformer["feat_aug_test"]
-        # mask_transformer = ~np.isnan(feat_aug_test_transformer)
+        feat_aug_test_transformer = transformer["feat_aug_test"]
+        mask_transformer = ~np.isnan(feat_aug_test_transformer)
         
         if np.any(mask_xsec):
             axs[1][i].plot(x_axis[mask_xsec], feat_aug_test_xsec[mask_xsec], color="blue", marker='x', linestyle="solid", label=f"XSec (n={n})")
@@ -106,8 +106,8 @@ if __name__ == "__main__":
             axs[1][i].plot(x_axis[mask_sm], feat_aug_test_sm[mask_sm], color="grey", marker='s', linestyle=(0, (3, 1, 1, 1)), label="SM")
         if np.any(mask_protopnet):
             axs[1][i].plot(x_axis[mask_protopnet], feat_aug_test_sm[mask_protopnet], color="black", marker='^', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="PPN")
-        # if np.any(mask_transformer):
-        #     axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_sm[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+        if np.any(mask_transformer):
+            axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_sm[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
         axs[1][i].set_xlim([0, config["feature_dim"]])
         # axs[1][i].set_ylim([0, 100])
         axs[1][i].set_xticks(x_axis[::2])
@@ -121,7 +121,7 @@ if __name__ == "__main__":
         feat_deduc_test_occl = occl["feat_deduc_test"]
         feat_deduc_test_sm = sm["feat_deduc_test"]
         feat_deduc_test_protopnet = protopnet["feat_deduc_test"]
-        # feat_deduc_test_transformer = transformer["feat_deduc_test"]
+        feat_deduc_test_transformer = transformer["feat_deduc_test"]
         
         axs[2][i].plot(x_axis, feat_deduc_test_xsec, color="blue", marker='x', linestyle="solid", label=f"XSec (n={n})")
         axs[2][i].plot(x_axis, feat_deduc_test_lime, color="darkgreen", marker='o', linestyle="dashed", label="LIME")
@@ -131,7 +131,7 @@ if __name__ == "__main__":
         axs[2][i].plot(x_axis, feat_deduc_test_occl, color="fuchsia", marker='.', linestyle=(0, (3, 5, 1, 5)), label="Occl.")
         axs[2][i].plot(x_axis, feat_deduc_test_sm, color="grey", marker='s', linestyle=(0, (3, 1, 1, 1)), label="SM")
         axs[2][i].plot(x_axis, feat_deduc_test_protopnet, color="black", marker='^', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="PPN")
-        # axs[2][i].plot(x_axis, feat_deduc_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+        axs[2][i].plot(x_axis, feat_deduc_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
         axs[2][i].set_xlim([0, config["feature_dim"]])
         # axs[2][i].set_ylim([0, 100])
         axs[2][i].set_xticks(x_axis[::2])
@@ -193,33 +193,33 @@ if __name__ == "__main__":
         
         axs[2][i].plot(x_axis, feat_deduc_test_xnids, color="cadetblue", marker='+', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="xNIDS")
 
-    for i, config_name in [(1, "phishing.json"), (2, "netflow.json"), (4, "nsl_kdd_multi.json"),]:
-        with open(os.path.join("../config", config_name), 'r') as cfg:
-            config = json.load(cfg)
+    # for i, config_name in [(1, "phishing.json"), (2, "netflow.json"), (4, "nsl_kdd_multi.json"),]:
+    #     with open(os.path.join("../config", config_name), 'r') as cfg:
+    #         config = json.load(cfg)
 
-        set_seed(config["seed"])
-        num_seeds = 1
-        seed = random.sample(range(1, 10000), num_seeds)[0]
+    #     set_seed(config["seed"])
+    #     num_seeds = 1
+    #     seed = random.sample(range(1, 10000), num_seeds)[0]
         
-        with open(f"../results/{config['dataset']}/transformer_fidelity_values_seed{seed}.pkl", "rb") as infile:
-            transformer = pickle.load(infile)
+    #     with open(f"../results/{config['dataset']}/transformer_fidelity_values_seed{seed}.pkl", "rb") as infile:
+    #         transformer = pickle.load(infile)
 
-        step = config["evaluation"]["step"]
-        x_axis = np.arange(step, config["feature_dim"] + 1, step)
+    #     step = config["evaluation"]["step"]
+    #     x_axis = np.arange(step, config["feature_dim"] + 1, step)
 
-        synth_test_transformer = transformer["synth_test"]
+    #     synth_test_transformer = transformer["synth_test"]
         
-        axs[0][i].plot(x_axis, synth_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+    #     axs[0][i].plot(x_axis, synth_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
 
-        feat_aug_test_transformer = transformer["feat_aug_test"]
-        mask_transformer = ~np.isnan(feat_aug_test_transformer)
+    #     feat_aug_test_transformer = transformer["feat_aug_test"]
+    #     mask_transformer = ~np.isnan(feat_aug_test_transformer)
         
-        if np.any(mask_transformer):
-            axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_transformer[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+    #     if np.any(mask_transformer):
+    #         axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_transformer[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
 
-        feat_deduc_test_transformer = transformer["feat_deduc_test"]
+    #     feat_deduc_test_transformer = transformer["feat_deduc_test"]
         
-        axs[2][i].plot(x_axis, feat_deduc_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+    #     axs[2][i].plot(x_axis, feat_deduc_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
 
     axs[0][0].set_ylabel("PCR (%)")
     axs[0][0].set_title(f"PDF Malware Identification", pad=pad, fontsize=18)

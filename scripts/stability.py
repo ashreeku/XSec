@@ -30,22 +30,22 @@ if __name__ == '__main__':
         seeds = random.sample(range(1, 10000), num_seeds)
 
         method_to_path = {
-            # "XSec": (f"xsec_seed{seeds[0]}_k10_n3_ablationNone.pkl", f"xsec_seed{seeds[1]}_k10_n3_ablationNone.pkl"),
-            # "LIME": (f"lime_seed{seeds[0]}.pkl", f"lime_seed{seeds[1]}.pkl"),
-            # "SHAP": (f"shap_seed{seeds[0]}.pkl", f"shap_seed{seeds[1]}.pkl"),
-            # "IG": (f"ig_seed{seeds[0]}.pkl", f"ig_seed{seeds[1]}.pkl"),
-            # "GGC": (f"ggc_seed{seeds[0]}.pkl", f"ggc_seed{seeds[1]}.pkl"),
-            # "Occl": (f"occl_seed{seeds[0]}.pkl", f"occl_seed{seeds[1]}.pkl"),
-            # "SM": (f"sm_seed{seeds[0]}.pkl", f"sm_seed{seeds[1]}.pkl"),
+            "XSec": (f"xsec_seed{seeds[0]}_k10_n3_ablationNone.pkl", f"xsec_seed{seeds[1]}_k10_n3_ablationNone.pkl"),
+            "LIME": (f"lime_seed{seeds[0]}.pkl", f"lime_seed{seeds[1]}.pkl"),
+            "SHAP": (f"shap_seed{seeds[0]}.pkl", f"shap_seed{seeds[1]}.pkl"),
+            "IG": (f"ig_seed{seeds[0]}.pkl", f"ig_seed{seeds[1]}.pkl"),
+            "GGC": (f"ggc_seed{seeds[0]}.pkl", f"ggc_seed{seeds[1]}.pkl"),
+            "Occl": (f"occl_seed{seeds[0]}.pkl", f"occl_seed{seeds[1]}.pkl"),
+            "SM": (f"sm_seed{seeds[0]}.pkl", f"sm_seed{seeds[1]}.pkl"),
             "PPN": (f"protopnet_seed{seeds[0]}.pkl", f"protopnet_seed{seeds[1]}.pkl"),
             "Tran": (f"transformer_seed{seeds[0]}.pkl", f"transformer_seed{seeds[1]}.pkl"),
         }
 
-        # if config["dataset"] in ["pdf", "phishing", "netflow"]:
-        #     method_to_path["LEMNA"] = (f"lemna_seed{seeds[0]}.pkl", f"lemna_seed{seeds[1]}.pkl")
+        if config["dataset"] in ["pdf", "phishing", "netflow"]:
+            method_to_path["LEMNA"] = (f"lemna_seed{seeds[0]}.pkl", f"lemna_seed{seeds[1]}.pkl")
         
-        # if config["dataset"] in ["netflow"]:
-        #     method_to_path["xNIDS"] = (f"xnids_seed{seeds[0]}.pkl", f"xnids_seed{seeds[1]}.pkl")
+        if config["dataset"] in ["netflow"]:
+            method_to_path["xNIDS"] = (f"xnids_seed{seeds[0]}.pkl", f"xnids_seed{seeds[1]}.pkl")
 
         N = 10
 
