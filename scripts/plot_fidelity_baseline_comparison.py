@@ -4,7 +4,7 @@ import pickle
 import random
 
 import matplotlib.pyplot as plt
-plt.rcParams.update({'font.size': 18})
+plt.rcParams.update({'font.size': 20})
 import numpy as np
 
 from utils import set_seed
@@ -13,7 +13,7 @@ from utils import set_seed
 if __name__ == "__main__":
     n = 3
     
-    fig, axs = plt.subplots(nrows=3, ncols=5)
+    fig, axs = plt.subplots(nrows=3, ncols=5, sharex='col')
     fig.set_size_inches(25, 9)
     pad = 13
 
@@ -105,9 +105,9 @@ if __name__ == "__main__":
         if np.any(mask_sm):
             axs[1][i].plot(x_axis[mask_sm], feat_aug_test_sm[mask_sm], color="grey", marker='s', linestyle=(0, (3, 1, 1, 1)), label="SM")
         if np.any(mask_protopnet):
-            axs[1][i].plot(x_axis[mask_protopnet], feat_aug_test_sm[mask_protopnet], color="black", marker='^', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="PPN")
+            axs[1][i].plot(x_axis[mask_protopnet], feat_aug_test_protopnet[mask_protopnet], color="black", marker='^', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="PPN")
         if np.any(mask_transformer):
-            axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_sm[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
+            axs[1][i].plot(x_axis[mask_transformer], feat_aug_test_transformer[mask_transformer], color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
         axs[1][i].set_xlim([0, config["feature_dim"]])
         # axs[1][i].set_ylim([0, 100])
         axs[1][i].set_xticks(x_axis[::2])
@@ -222,27 +222,34 @@ if __name__ == "__main__":
     #     axs[2][i].plot(x_axis, feat_deduc_test_transformer, color="olive", marker='>', linestyle=(0, (3, 10, 1, 10, 1, 10)), label="Tran.")
 
     axs[0][0].set_ylabel("PCR (%)")
-    axs[0][0].set_title(f"PDF Malware Identification", pad=pad, fontsize=18)
+    axs[0][0].set_title(f"PDF Malware", pad=pad, fontsize=24)
     axs[1][0].set_ylabel("PCR (%)")
-    axs[2][0].set_xlabel("$|\mathbf{F_{x}}|$")
     axs[2][0].set_ylabel("PCR (%)")
-    axs[0][1].set_title(f"Website Phishing Detection", pad=pad, fontsize=18)
-    axs[2][1].set_xlabel("$|\mathbf{F_{x}}|$")
-    axs[0][2].set_title(f"Network Intrusion Detection", pad=pad, fontsize=18)
-    axs[2][2].set_xlabel("$|\mathbf{F_{x}}|$")
-    axs[0][3].set_title(f"PE Malware Classification", pad=pad, fontsize=18)
-    axs[2][3].set_xlabel("$|\mathbf{F_{x}}|$")
-    axs[0][4].set_title(f"Network Attack Classification", pad=pad, fontsize=18)
-    axs[2][4].set_xlabel("$|\mathbf{F_{x}}|$")
+    axs[0][1].set_title(f"Website Phishing", pad=pad, fontsize=24)
+    axs[0][2].set_title(f"Network Intrusion", pad=pad, fontsize=24)
+    axs[0][3].set_title(f"PE Malware", pad=pad, fontsize=24)
+    axs[0][4].set_title(f"Network Attack", pad=pad, fontsize=24)
 
-    rows = ["Synthetic", "Feature Augmentation", "Feature Deduction"]
+    # Share x-axis within each dataset column and show x tick labels only on bottom row
+    for col in range(5):
+        for row in range(2):
+            axs[row][col].tick_params(labelbottom=False)
+            axs[row][col].set_xlabel("")
+        axs[2][col].set_xlabel(r"$|\mathbf{F}_{\mathbf{x}}|$")
+    
+    for ax in axs.flat:
+        ax.grid(True, axis="both")
+        ax.set_axisbelow(True)
+
+    rows = ["Synthetic", "Augmentation", "Deduction"]
     for ax, row in zip(axs[:,0], rows):
         ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
-                    size=18, xycoords=ax.yaxis.label, textcoords='offset points',
+                    size=24, xycoords=ax.yaxis.label, textcoords='offset points',
                     ha='right', va='center', rotation=90)
 
     handles, labels = axs[0][2].get_legend_handles_labels()
-    fig.legend(handles, labels, ncol=11, loc="upper center", bbox_to_anchor=(0.517, 1.05), frameon=True, edgecolor="black")
+    fig.legend(handles, labels, ncol=11, loc="upper center", bbox_to_anchor=(0.5, 1.10), frameon=True, edgecolor="black", fontsize=22)
     
-    plt.tight_layout()
+    plt.tight_layout(pad=0.3, w_pad=0.25, h_pad=0.45)
+    fig.subplots_adjust(wspace=0.20, hspace=0.10)
     plt.savefig(f"../results/figures/fidelity_baseline_comparison.pdf", bbox_inches="tight")
